@@ -1,0 +1,22 @@
+min_fields
+{
+    type volFieldValue;
+    libs ("libfieldFunctionObjects.so");
+    writeFields false;
+    log true;
+
+    regionType all;
+    operation minMag;
+    fields ( U.air U.water k.water omega.water p );
+}
+max_fields
+{
+    type volFieldValue;
+    libs ("libfieldFunctionObjects.so");
+    writeFields false;
+    log true;
+
+    regionType all;
+    operation maxMag;
+    fields ( U.air U.water k.water omega.water p );
+}

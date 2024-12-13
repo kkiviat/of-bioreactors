@@ -1,0 +1,9 @@
+simulationType  RAS;
+
+RAS
+{
+    RASModel kOmegaSSTSato;
+
+    turbulence      on;
+    printCoeffs     on;
+}

@@ -1,0 +1,64 @@
+#includeFunc CourantNo
+#includeFunc yPlus(phase=water)
+#includeFunc probes
+#includeFunc mag(U.water)
+#includeFunc mag(U.air)
+#includeFunc wallShearStress(phase=water)
+#includeFunc wallShearStress(phase=air)
+
+strainRateWater
+{
+         type           strainRate;
+         libs           ("libstrainRate.so");
+         field          U.water;
+         executeControl writeTime;
+         writeControl   writeTime;
+}
+
+strainRateAir
+{
+         type           strainRate;
+         libs           ("libstrainRate.so");
+         field          U.air;
+         executeControl writeTime;
+         writeControl   writeTime;
+}
+
+inletFlowRate
+{
+    type              surfaceFieldValue;
+    libs              ("libfieldFunctionObjects.so");
+    fields            (phi.air);
+    writeFields       no;
+    log               yes;
+    regionType        patch;
+    name              sparger_upper;
+    operation         sum;
+    weightField       alpha.air;
+
+}
+outletFlowRate
+{
+    type              surfaceFieldValue;
+    libs              ("libfieldFunctionObjects.so");
+    fields            (phi.air);
+    writeFields       no;
+    log               yes;
+    regionType        patch;
+    name              outlet;
+    operation         sum;
+    weightField       alpha.air;
+
+}
+
+volAverages
+{
+    type              volFieldValue;
+    libs              ("libfieldFunctionObjects.so");
+    fields            (mag(U.water) k.water epsilon.water alpha.air);
+    writeFields       no;
+    log               yes;
+    regionType        cellZone;
+    name              liquid;
+    operation         volAverage;
+}

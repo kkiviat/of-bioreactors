@@ -1,0 +1,25 @@
+#includeFunc CourantNo
+#includeFunc yPlus
+#includeFunc probes
+#includeFunc mag(U)
+#includeFunc wallShearStress
+
+strainRate
+{
+         type           strainRate;
+         libs           ("libstrainRate.so");
+         field          U;
+         executeControl writeTime;
+         writeControl   writeTime;
+}
+
+volAverages
+{
+    type              volFieldValue;
+    libs              ("libfieldFunctionObjects.so");
+    fields            (mag(U) k epsilon);
+    writeFields       no;
+    log               yes;
+    regionType        all;
+    operation         volAverage;
+}

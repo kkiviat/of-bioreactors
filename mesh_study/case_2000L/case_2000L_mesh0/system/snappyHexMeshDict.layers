@@ -1,0 +1,115 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  10
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    object      snappyHexMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+#includeEtc "caseDicts/mesh/generation/snappyHexMeshDict.cfg"
+
+castellatedMesh off;
+snap            off;
+addLayers       on;
+
+geometry {};
+
+castellatedMeshControls
+{
+    insidePoint (0 1e-5 0);
+}
+
+snapControls {}
+
+meshQualityControls
+{
+    maxNonOrtho     82;
+    maxBoundarySkewness 20;
+    maxInternalSkewness 4;
+    maxConcave      75;
+    minVol          1e-13;
+    minTetQuality   -1e+30;
+    minArea         -1;
+    minTwist        0.02;
+    minDeterminant  0.001;
+    minFaceWeight   0.02;
+    minVolRatio     0.01;
+    minTriangleTwist -1;
+    nSmoothScale    4;
+    errorReduction  0.75;
+    relaxed
+    {
+        maxNonOrtho     85;
+    }
+}
+
+addLayersControls
+{
+    layers
+    {
+      tankwall
+	{
+	  nSurfaceLayers 2;
+          finalLayerThickness 0.5;
+	}
+      // shaft
+      // 	{
+      // 	    nSurfaceLayers 1;
+      // 	    expansionRatio      1.2;
+      // 	    finalLayerThickness 0.8;
+      // 	    minThickness        0.1;
+      // 	}
+      baffles
+	{
+	    nSurfaceLayers 1;
+	    relativeSizes       true;
+	    expansionRatio      1.2;
+	    finalLayerThickness 0.5;
+	    minThickness        0.1;
+	}
+      // impeller
+      // 	{
+      // 	    nSurfaceLayers 1;
+      // 	    relativeSizes       true;
+      // 	    expansionRatio      1.2;
+      // 	    finalLayerThickness 0.5;
+      // 	    minThickness        0.1;
+      // 	}
+      // blades_pitched
+      // 	{
+      // 	    nSurfaceLayers 2;
+      // 	    relativeSizes       true;
+      // 	    expansionRatio      1.2;
+      // 	    finalLayerThickness 0.3;
+      // 	    minThickness        0.1;
+      // 	}
+      // blades_rushton
+      // 	{
+      // 	    nSurfaceLayers 1;
+      // 	    relativeSizes       true;
+      // 	    expansionRatio      1.2;
+      // 	    finalLayerThickness 0.5;
+      // 	    minThickness        0.1;
+      // 	}
+    }
+
+    relativeSizes       true;
+    expansionRatio      1.2;
+    finalLayerThickness 0.5;
+    minThickness        0.1;
+}
+
+writeFlags
+(
+);
+
+mergeTolerance 1e-6;
+
+// ************************************************************************* //

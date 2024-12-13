@@ -1,0 +1,22 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  10
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+probes
+{
+    functionObjectLibs ( "libsampling.so" );
+    type            probes;
+    name            probes;
+    writeControl    runTime;
+    writeInterval   0.01;
+    fields          ( p mag(U.water) mag(U.air) U.water U.air k.water k.air epsilon.water epsilon.air alpha.air );
+    probeLocations  (
+		    #include "$FOAM_CASE/system/include/probe_locations"
+		     );
+}
+
+
+// ************************************************************************* //

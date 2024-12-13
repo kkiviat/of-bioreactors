@@ -1,0 +1,10 @@
+import sys
+import os
+
+projectRoot = |-project_root-|
+scripts_dir = os.path.join(projectRoot, "|-scripts_dir_name-|")
+casePath = |-casePath-|
+sys.path.append(scripts_dir)
+
+with open(os.path.join(scripts_dir, "write_params.py")) as in_file:
+    exec(in_file.read())

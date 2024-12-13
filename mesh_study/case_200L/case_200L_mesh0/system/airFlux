@@ -1,0 +1,34 @@
+airFlux
+{
+    type            surfaceFieldValue;
+    libs            ("libfieldFunctionObjects.so");
+
+    log             true;
+    writeControl    runTime;
+    writeInterval   0.01;
+    writeFields     true;
+
+    surfaceFormat   none;
+    regionType      sampledSurface;
+
+    sampledSurfaceDict
+    {
+	type                  plane;
+	planeType             pointAndNormal;
+	pointAndNormalDict
+	{
+	    point  (0 $plane_height 0);
+	    normal (0 1 0);
+	};
+	interpolate false;
+    }
+
+    weightField     alpha.air;
+
+    operation       areaNormalIntegrate;
+
+    fields
+    (
+        U.air
+    );
+}

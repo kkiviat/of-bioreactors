@@ -1,0 +1,48 @@
+ddtSchemes
+{
+    default         Euler;
+}
+
+gradSchemes
+{
+    default             Gauss linear;
+    grad(U.air)		cellLimited Gauss linear 1;
+    grad(U.water)	cellLimited Gauss linear 1;
+}
+
+divSchemes
+{
+    default                         none;
+
+    "div\(phi,alpha.*\)"            Gauss vanLeer01;
+    "div\(phir,alpha.*,alpha.*\)"   Gauss vanLeer01;
+
+    "div\((phi|alphaRhoPhi).*,U.*\)"      Gauss upwind;
+
+    "div\(alphaRhoPhi.*,(h|e).*\)"  Gauss limitedLinear 1;
+    "div\(alphaRhoPhi.*,K.*\)"      Gauss limitedLinear 1;
+    "div\(alphaRhoPhi.*,\(p\|thermo:rho.*\)\)" Gauss limitedLinear 1;
+
+    "div\(\(\(\(alpha.*\*thermo:rho.*\)*nuEff.*\)\*dev2\(T\(grad\(U.*\)\)\)\)\)" Gauss linear;
+
+    div((nuEff*dev2(T(grad(U)))))   Gauss linear;
+
+    "div\((phi|alphaRhoPhi).*,(k|epsilon|omega).*\)"  Gauss upwind;
+
+    "div\(phim,(k|epsilon)m.*\)" Gauss upwind;
+}
+
+laplacianSchemes
+{
+    default         Gauss linear uncorrected;
+}
+
+interpolationSchemes
+{
+    default         linear;
+}
+
+snGradSchemes
+{
+    default         uncorrected;
+}

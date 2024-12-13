@@ -1,0 +1,5 @@
+// x y z //
+( |-probe_x-| |-probe_y_bottom-| |-probe_z-| )
+( |-probe_x-| |-probe_y_mid1-| |-probe_z-| )
+( |-probe_x-| |-probe_y_mid2-| |-probe_z-| )
+( |-probe_x-| |-probe_y_top-| |-probe_z-| )

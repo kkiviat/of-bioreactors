@@ -1,0 +1,36 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  10
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format          ascii;
+    class           dictionary;
+    location        "system";
+    object          controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+#include "|-config_dir-|/controlDict.base"
+
+endTime         90;
+
+functions {
+#include "|-functionObjectsDir-|/controlDict.run"
+#include "|-functionObjectsDir-|/minMax"
+fieldAverage1
+{
+    type              fieldAverage;
+    libs              ("libfieldFunctionObjects.so");
+    restartOnRestart  false;
+    timeStart         60;
+    writeControl      outputTime;
+    fields
+    (
+     #include "|-functionObjectsDir-|/meanFields"
+    );
+}
+}

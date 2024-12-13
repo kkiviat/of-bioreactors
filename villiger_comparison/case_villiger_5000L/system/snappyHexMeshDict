@@ -1,0 +1,220 @@
+/*-------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  10
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    object      snappyHexMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+#includeEtc "caseDicts/mesh/generation/snappyHexMeshDict.cfg"
+
+castellatedMesh on;
+snap            on;
+addLayers       off;
+
+geometry
+{
+    tankwall
+    {
+        type triSurfaceMesh;
+        file "tankwall.stl";
+    }
+    outlet
+    {
+        type triSurfaceMesh;
+        file "outlet.stl";
+    }
+    baffles
+    {
+        type triSurfaceMesh;
+        file "baffles.stl";
+    }
+    sparger_lower
+    {
+        type triSurfaceMesh;
+        file "sparger_lower.stl";
+    }
+    sparger_upper
+    {
+        type triSurfaceMesh;
+        file "sparger_upper.stl";
+    }
+    impeller
+    {
+        type triSurfaceMesh;
+        file "impeller_and_disk.stl";
+    }
+    blades_rushton
+    {
+        type triSurfaceMesh;
+        file "rushton_blades.stl";
+    }
+    blades_pitched
+    {
+        type triSurfaceMesh;
+        file "pitched_blades.stl";
+    }
+    shaft
+    {
+        type triSurfaceMesh;
+        file "shaft.stl";
+    }
+    MRF
+    {
+        type            searchableCylinder;
+        point1          ( 0 0.25 0 );
+        point2          ( 0 1.2750000000000001 0 );
+        radius          0.51;
+    }
+    fill_level
+    {
+        type            searchableCylinder;
+        point1          ( 0 2.352 0 );
+        point2          ( 0 2.448 0 );
+        radius          0.85;
+    }
+      impeller0
+      {
+        type            searchableCylinder;
+        point1          ( 0 0.25 0 );
+        point2          ( 0 0.55 0 );
+        radius          0.51;
+      }
+      impeller1
+      {
+        type            searchableCylinder;
+        point1          ( 0 0.9500000000000001 0 );
+        point2          ( 0 1.25 0 );
+        radius          0.51;
+      }
+};
+
+castellatedMeshControls
+{
+    features
+    (
+     { file "tankwall.eMesh" ; level 0; }
+     { file "outlet.eMesh" ; level 0; }
+     { file "baffles.eMesh" ; level 1; }
+     { file "sparger_lower.eMesh" ; level 1; }
+     { file "sparger_upper.eMesh" ; level 1; }
+     { file "impeller_and_disk.eMesh" ; level 3; }
+     { file "rushton_blades.eMesh" ; level 3; }
+     { file "pitched_blades.eMesh" ; level 2; }
+     { file "shaft.eMesh" ; level 3; }
+     { file "MRF.eMesh" ; level 1; }
+    );
+
+    refinementSurfaces
+    {
+        tankwall {level (0 0);}
+        outlet
+        {
+            level (0 0);
+            patchInfo
+            {
+                type patch;
+            }
+        }
+        baffles {level (1 1);}
+        sparger_lower {level (1 1);}
+        sparger_upper
+        {
+            level (1 1);
+            patchInfo
+            {
+                type patch;
+            }
+        }
+        impeller {level (3 3);}
+        blades_rushton {level (3 3);}
+        blades_pitched {level (2 2);}
+        shaft {level (3 3);}
+	MRF
+	{
+	    level (0 0);
+            cellZone        cellMRF0zone;
+            faceZone        faceMRF0zone;
+	    cellZoneInside inside;
+	}
+    }
+
+    refinementRegions
+    {
+        MRF
+        {
+            mode    inside;
+            levels   ((1e+15 0));
+        }
+        fill_level
+        {
+            mode    inside;
+            levels   ((1e+15 1));
+        }
+
+	impeller0
+	{
+            mode            inside;
+            levels          ( ( 1e+15 1 ) );
+	}
+	impeller1
+	{
+            mode            inside;
+            levels          ( ( 1e+15 1 ) );
+	}
+    }
+
+    insidePoint (0 2 0);
+}
+
+snapControls
+{
+    // Number of patch smoothing iterations before finding correspondence
+    // to surface
+    nSmoothPatch 3;
+
+    // Maximum relative distance for points to be attracted by surface.
+    // True distance is this factor times local maximum edge length.
+    // Note: changed(corrected) w.r.t 17x! (17x used 2* tolerance)
+    tolerance 3.0;
+
+    // Number of mesh displacement relaxation iterations.
+    nSolveIter 30;
+
+    // Maximum number of snapping relaxation iterations. Should stop
+    // before upon reaching a correct mesh.
+    nRelaxIter 5;
+
+    // Feature snapping
+
+        // Number of feature edge snapping iterations.
+        // Leave out altogether to disable.
+        nFeatureSnapIter 15;
+
+        // Detect (geometric only) features by sampling the surface
+        // (default=false).
+        implicitFeatureSnap false;
+
+        // Use castellatedMeshControls::features (default = true)
+        explicitFeatureSnap true;
+
+        // Detect features between multiple surfaces
+        // (only for explicitFeatureSnap, default = false)
+        multiRegionFeatureSnap false;
+}
+
+
+writeFlags
+(
+);
+
+mergeTolerance 1e-6;
+
+// ************************************************************************* //

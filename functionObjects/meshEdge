@@ -1,0 +1,58 @@
+// From https://www.cfd-online.com/Forums/openfoam-programming-development/127267-cell-minimum-side-length.html
+meshEdge
+{
+  functionObjectLibs ( "libutilityFunctionObjects.so" );
+  type            coded;
+
+  codeOptions
+#{
+  -I$(LIB_SRC)/meshTools/lnInclude
+#};
+
+  codeExecute
+#{
+// // Get needed reference to the mesh
+const edgeList& edges = mesh().edges();
+const pointField& pp = mesh().points();
+const labelListList& cEdges = mesh().cellEdges();
+
+// Make a list with all the edge lenghts
+scalarField eLengths(edges.size(), 0.0);
+
+forAll (edges, edgei)
+{
+    eLengths[edgei] = edges[edgei].mag(pp);
+}
+
+// Find the minimum edge length in the whole mesh
+scalar minLength = Foam::min(eLengths);
+
+Info << "Min length=" << minLength << endl;
+
+
+// Find the minimum per cell
+scalarField minLengthCells(cEdges.size(), GREAT);
+scalarField maxLengthCells(cEdges.size(), 0);
+scalarField secondMinLengthCells(cEdges.size(), GREAT);
+
+forAll (cEdges, celli)
+{
+     const labelList& ce = cEdges[celli];
+
+     forAll (ce, edgei)
+     {
+         minLengthCells[celli] = Foam::min(minLengthCells[celli], eLengths[ce[edgei]]);
+         maxLengthCells[celli] = Foam::max(maxLengthCells[celli], eLengths[ce[edgei]]);
+     }
+     forAll (ce, edgei)
+     {
+         if (Foam::min(secondMinLengthCells[celli], eLengths[ce[edgei]]) > minLengthCells[celli]) {
+	     secondMinLengthCells[celli] = Foam::min(secondMinLengthCells[celli], eLengths[ce[edgei]]);
+     	 }
+     }
+}
+Info << "Min second smallest edge = " << Foam::min(secondMinLengthCells) << endl;
+Info << "Min largest edge = " << Foam::min(maxLengthCells) << endl;
+return minLength;
+#};
+}

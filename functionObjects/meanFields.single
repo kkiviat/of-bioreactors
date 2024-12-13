@@ -1,0 +1,48 @@
+	U
+	{
+		mean        on;
+		prime2Mean  off;
+		base        time;
+	}
+
+	k
+	{
+		mean        on;
+		prime2Mean  off;
+		base        time;
+	}
+
+	epsilon
+	{
+		mean        on;
+		prime2Mean  off;
+		base        time;
+	}
+
+	p
+	{
+		mean        on;
+		prime2Mean  off;
+		base        time;
+	}
+
+	strainRate(U)
+	{
+		mean        on;
+		prime2Mean  off;
+		base        time;
+	}
+
+	wallShearStress
+	{
+		mean        on;
+		prime2Mean  off;
+		base        time;
+	}
+
+	yPlus
+	{
+		mean        on;
+		prime2Mean  off;
+		base        time;
+	}

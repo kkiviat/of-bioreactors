@@ -1,0 +1,61 @@
+solvers
+{
+    "alpha.*"
+    {
+        nAlphaCorr      1;
+        nAlphaSubCycles 2;
+    }
+
+    p_rgh
+    {
+      solver          PCG;
+      preconditioner  DIC;
+      tolerance       1e-6;
+      relTol          0.01;
+      minIter         3;
+    }
+
+    p_rghFinal
+    {
+        $p_rgh;
+        minIter         5;
+        tolerance       1e-08;
+        relTol          0;
+    }
+
+    p
+    {
+        $p_rgh;
+    }
+    pFinal
+    {
+        $p_rghFinal;
+    }
+
+    "U.*"
+    {
+      solver          PBiCGStab;
+      preconditioner  DILU;
+      tolerance       1e-8;
+      relTol          0;
+      minIter         3;
+    }
+
+    "e.*"
+    {
+      solver          PBiCGStab;
+      preconditioner  DILU;
+      tolerance       1e-8;
+      relTol          0;
+      minIter         3;
+    }
+
+    "(k|epsilon|omega|Theta).*"
+    {
+      solver          PBiCGStab;
+      preconditioner  DILU;
+      tolerance       1e-8;
+      relTol          0;
+      minIter         3;
+    }
+}

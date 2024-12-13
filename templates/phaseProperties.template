@@ -1,0 +1,187 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  9
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      phaseProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+type basicMultiphaseSystem;
+
+phases (air water);
+
+air
+{
+    type            purePhaseModel;
+    diameterModel   isothermal;
+    isothermalCoeffs
+    {
+        d0              |-bubble_diameter-|;
+        p0              |-p_ref_bubble-|;
+    }
+    residualAlpha   1e-4;
+
+}
+
+water
+{
+    type            purePhaseModel;
+    diameterModel   constant;
+    constantCoeffs
+    {
+        d               1e-4;
+    }
+    residualAlpha   1e-4;
+}
+
+blending
+{
+    default
+    {
+        type            linear;
+        residualAlpha   1e-3;
+        minFullyContinuousAlpha.air 0.7;
+        minPartlyContinuousAlpha.air 0.3;
+        minFullyContinuousAlpha.water 0.7;
+        minPartlyContinuousAlpha.water 0.3;
+    }
+
+    drag
+    {
+        type            linear;
+        residualAlpha   1e-3;
+        minFullyContinuousAlpha.air 0.7;
+        minPartlyContinuousAlpha.air 0.5;
+        minFullyContinuousAlpha.water 0.7;
+        minPartlyContinuousAlpha.water 0.5;
+    }
+}
+
+surfaceTension
+{
+    air_water
+    {
+        type            constant;
+        sigma           0.07;
+    }
+}
+
+drag
+{
+    air_dispersedIn_water
+    {
+      <!--(if dragModel == "schiller-naumann")-->
+        type            SchillerNaumann;
+        residualAlpha   1e-3;
+        residualRe      1e-3;
+      <!--(elif dragModel == "grace")-->
+        type            Grace;
+        residualRe      1e-3;
+      <!--(elif dragModel == "tomiyama")-->
+        type            TomiyamaCorrelated;
+        A               24;
+      <!--(elif dragModel == "ishii-zuber")-->
+        type            IshiiZuber;
+        residualRe      1e-3;
+      <!--(end)-->
+        swarmCorrection
+        {
+            type        none;
+        }
+    }
+
+    water_dispersedIn_air
+    {
+      <!--(if dragModel == "schiller-naumann")-->
+        type            SchillerNaumann;
+        residualAlpha   1e-3;
+        residualRe      1e-3;
+      <!--(elif dragModel == "grace")-->
+        type            Grace;
+        residualRe      1e-3;
+      <!--(elif dragModel == "tomiyama")-->
+        type            TomiyamaCorrelated;
+        A               24;
+      <!--(elif dragModel == "ishii-zuber")-->
+        type            IshiiZuber;
+        residualRe      1e-3;
+      <!--(end)-->
+        swarmCorrection
+        {
+            type        none;
+        }
+    }
+
+    air_segregatedWith_water
+    {
+        type            segregated;
+        m               0.5;
+        n               8;
+        swarmCorrection
+        {
+            type        none;
+        }
+    }
+}
+
+virtualMass
+{
+    air_dispersedIn_water
+    {
+        type            constantCoefficient;
+        Cvm             0.5;
+    }
+    water_dispersedIn_air
+    {
+        type            constantCoefficient;
+        Cvm             0.5;
+    }
+}
+
+heatTransfer
+{
+    air_dispersedIn_water
+    {
+        type            RanzMarshall;
+        residualAlpha   1e-3;
+    }
+    water_dispersedIn_air
+    {
+        type            RanzMarshall;
+        residualAlpha   1e-3;
+    }
+}
+
+lift
+{}
+
+wallLubrication
+{}
+
+phaseTransfer
+{}
+
+turbulentDispersion
+{
+    air_dispersedIn_water
+    {
+        type            LopezDeBertodano;
+	Ctd             1.0;
+        residualAlpha   1e-3;
+    }
+    water_dispersedIn_air
+    {
+        type            none;
+    }
+}
+
+
+// ************************************************************************* //

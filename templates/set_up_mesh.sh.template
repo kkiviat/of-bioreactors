@@ -1,0 +1,12 @@
+python3 |-scripts_dir-|/run_salome_script.py |-scripts_dir-|/make_stls.py -c .
+rm -r constant/polyMesh
+blockMesh
+mirrorMesh -dict |-config_dir-|/mirrorMeshDict.y -overwrite
+mirrorMesh -dict |-config_dir-|/mirrorMeshDict.z -overwrite
+transformPoints "Rz=90"
+transformPoints "scale=(|-1000*tank_diameter/2-| |-1000*tank_height-| |-1000*tank_diameter/2-|)"
+surfaceFeatures
+snappyHexMesh -overwrite
+snappyHexMesh -overwrite -dict system/snappyHexMeshDict.layers
+renumberMesh -overwrite
+topoSet -dict system/topoSetDict.liquid

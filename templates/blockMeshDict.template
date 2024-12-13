@@ -1,0 +1,28 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  3.0.0                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// number of cells
+Nx   |-int(tank_height / base_mesh_size)-|;
+NRinner   |-int(0.4 * tank_diameter / base_mesh_size)-|;
+NRouter   |-int(0.2 * tank_diameter / base_mesh_size)-|;
+
+// Nh |-int(tank_height / base_mesh_size)-|;
+// Nr |-int(tank_diameter / 2 / base_mesh_size)-|;
+// Na #calc "std::round($Nr * 0.6)";
+// shaft_bottom |-impeller_shaft_bottom / tank_height-|;
+// shaft_radius |-impeller_shaft_radius / (tank_diameter / 2)-|;
+
+#include "|-config_dir-|/blockMeshDict.cylinder"

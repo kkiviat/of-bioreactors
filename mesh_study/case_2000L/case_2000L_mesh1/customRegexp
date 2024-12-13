@@ -1,0 +1,132 @@
+epsilon
+{
+  expr ".*maxMag.+ of epsilonm = (%f%).+";
+  name max_epsilon;
+  theTitle "max epsilon";
+  titles
+   (
+     epsilonm
+   );
+  type regular;
+}
+epsilon_water
+{
+  expr ".*maxMag.+ of epsilon.water = (%f%).+";
+  titles
+   (
+     epsilon.water
+   );
+  type slave;
+  master epsilon;
+}
+epsilon_air
+{
+  expr ".*maxMag.+ of epsilon.air = (%f%).+";
+  titles
+   (
+     epsilon.air
+   );
+  type slave;
+  master epsilon;
+}
+k
+{
+  expr ".*maxMag.+ of km = (%f%).+";
+  name max_k;
+  theTitle "max k";
+  titles
+   (
+     km
+   );
+  type regular;
+}
+k_water
+{
+  expr ".*maxMag.+ of k.water = (%f%).+";
+  titles
+   (
+     k.water
+   );
+  type slave;
+  master k;
+}
+k_air
+{
+  expr ".*maxMag.+ of k.air = (%f%).+";
+  titles
+   (
+     k.air
+   );
+  type slave;
+  master k;
+}
+
+U
+{
+  expr ".*maxMag.+ of U.water = (%f%).+";
+  name max_U;
+  theTitle "max U";
+  titles
+   (
+     U.water
+   );
+  type regular;
+}
+U_air
+{
+  expr ".*maxMag.+ of U.air = (%f%).+";
+  titles
+   (
+     U.air
+   );
+  type slave;
+  master U;
+}
+
+U_avg
+{
+  expr ".*volAverage\(liquid\) of mag\(U.water\) = (%f%)";
+  name U_avg;
+  theTitle "<U> volume average";
+  titles
+   (
+     U.water
+   );
+  type regular;
+}
+
+k_avg
+{
+  expr ".*volAverage\(liquid\) of k.water = (%f%)";
+  name k_avg;
+  theTitle "k.water volume average";
+  titles
+   (
+     k.water
+   );
+  type regular;
+}
+
+epsilon_avg
+{
+  expr ".*volAverage\(liquid\) of epsilon.water = (%f%)";
+  name epsilon_avg;
+  theTitle "epsilon.water volume average";
+  titles
+   (
+     epsilon.water
+   );
+  type regular;
+}
+
+gas_holdup
+{
+  expr ".*volAverage\(liquid\) of alpha.air = (%f%)";
+  name gas_holdup;
+  theTitle "gas holdup";
+  titles
+   (
+     alpha.air
+   );
+  type regular;
+}

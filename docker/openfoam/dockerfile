@@ -1,0 +1,73 @@
+from trophime/salome:9.10.0-jammy
+
+FROM ubuntu:22.04
+ENV DEBIAN_FRONTEND=noninteractive
+
+COPY --from=0 /opt/SALOME-9.10.0-UB22.04 /opt/SALOME
+
+# setup timezone
+ENV TZ=America/Los_Angeles
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+# install essentials
+RUN apt-get update
+RUN apt-get install -y ssh
+RUN apt-get install -y curl
+RUN apt-get install -y nano
+RUN apt-get install -y git
+RUN apt-get install -y htop
+RUN apt-get install -y build-essential
+RUN apt-get install -y software-properties-common
+RUN apt-get install -y vim
+
+# for Salome
+RUN apt-get install -y graphviz
+RUN apt-get install -y libboost-filesystem-dev
+RUN apt-get install -y libqwt-qt5-dev
+RUN apt-get install -y libtbb-dev
+RUN apt-get install -y libfreeimage-dev
+RUN apt-get install -y libgdal-dev
+RUN apt-get install -y libopenblas-dev
+RUN apt-get install -y libcminpack-dev
+RUN apt-get install -y libboost-regex-dev
+
+# install useful openfoam tools
+RUN apt-get install -y ffmpeg
+
+# download openfoam and update repos
+RUN sh -c "wget -O - https://dl.openfoam.org/gpg.key > /etc/apt/trusted.gpg.d/openfoam.asc"
+RUN add-apt-repository http://dl.openfoam.org/ubuntu
+RUN apt-get update
+
+# install latest openfoam
+RUN apt-get install -y openfoam10
+
+# add user "foam"
+RUN addgroup --gid 1000 foam && \
+    adduser --uid 1000 --ingroup foam --home /home/foam --shell /bin/bash --disabled-password --gecos "" foam
+
+# configure https://github.com/boxboat/fixuid to dynamically set uid / gid at runtime
+RUN USER=foam && \
+    GROUP=foam && \
+    curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.6.0/fixuid-0.6.0-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - && \
+    chown root:root /usr/local/bin/fixuid && \
+    chmod 4755 /usr/local/bin/fixuid && \
+    mkdir -p /etc/fixuid && \
+    printf "user: $USER\ngroup: $GROUP\n" > /etc/fixuid/config.yml
+
+# source openfoam and fix docker mpi
+RUN echo "source /opt/openfoam10/etc/bashrc" >> ~foam/.bashrc &&\
+    echo "export OMPI_MCA_btl_vader_single_copy_mechanism=none" >> ~foam/.bashrc
+
+# change environmental variables to make sure $WM_PROJECT_USER_DIR is outside of the container
+RUN sed -i '/export WM_PROJECT_USER_DIR=/cexport WM_PROJECT_USER_DIR="/data/openfoam-$WM_PROJECT_VERSION"' /opt/openfoam10/etc/bashrc
+
+# improve the shell
+RUN echo "bind '\"\e[A\": history-search-backward'" >> ~foam/.bashrc
+RUN echo "bind '\"\e[B\": history-search-forward'" >> ~foam/.bashrc
+
+RUN echo 'export PS1="\[\e[0;37m\][\d \D{%H:%M:%S}] \[\e[1;96m\]\u\[\e[0m\]\[\e[0;37m\]@\[\e[0;95m\]docker-of$WM_PROJECT_VERSION\[\e[0m\] \[\e[0;37m\]\w\[\e[0m\] \[\e[0;92m\]\$ \[\e[0m\]"' >> ~foam/.bashrc
+
+# change user to "foam"
+USER foam:foam
+ENTRYPOINT ["fixuid"]

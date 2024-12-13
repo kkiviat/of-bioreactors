@@ -1,0 +1,35 @@
+thermoType
+{
+    type            heRhoThermo;
+    mixture         pureMixture;
+    transport       const;
+    thermo          hConst;
+    equationOfState rhoConst;
+    specie          specie;
+    energy          sensibleInternalEnergy;
+}
+
+mixture
+{
+    specie
+    {
+        molWeight   18;
+    }
+    equationOfState
+    {
+	rho        993;
+    }
+
+    thermodynamics
+    {
+        Cp          4183;
+        Hf          0;
+    }
+
+    transport
+    {
+        mu          7e-4;
+        Pr	    4.73;
+    }
+
+}

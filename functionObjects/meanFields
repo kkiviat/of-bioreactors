@@ -1,0 +1,94 @@
+	U.water
+	{
+		mean        on;
+		prime2Mean  off;
+		base        time;
+	}
+	U.air
+	{
+		mean        on;
+		prime2Mean  off;
+		base        time;
+	}
+
+	k.water
+	{
+		mean        on;
+		prime2Mean  off;
+		base        time;
+	}
+	k.air
+	{
+		mean        on;
+		prime2Mean  off;
+		base        time;
+	}
+
+	epsilon.water
+	{
+		mean        on;
+		prime2Mean  off;
+		base        time;
+	}
+	epsilon.air
+	{
+		mean        on;
+		prime2Mean  off;
+		base        time;
+	}
+
+	alpha.air
+	{
+		mean        on;
+		prime2Mean  off;
+		base        time;
+	}
+
+	p
+	{
+		mean        on;
+		prime2Mean  off;
+		base        time;
+	}
+
+	p_rgh
+	{
+		mean        on;
+		prime2Mean  off;
+		base        time;
+	}
+
+	strainRate(U.water)
+	{
+		mean        on;
+		prime2Mean  off;
+		base        time;
+	}
+
+	strainRate(U.air)
+	{
+		mean        on;
+		prime2Mean  off;
+		base        time;
+	}
+
+	wallShearStress.water
+	{
+		mean        on;
+		prime2Mean  off;
+		base        time;
+	}
+
+	wallShearStress.air
+	{
+		mean        on;
+		prime2Mean  off;
+		base        time;
+	}
+
+	yPlus.water
+	{
+		mean        on;
+		prime2Mean  off;
+		base        time;
+	}

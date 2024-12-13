@@ -1,0 +1,36 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  10
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format          ascii;
+    class           dictionary;
+    location        "system";
+    object          controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+#include "/data/openfoam-10/run/bioreactor_cfd/configs/controlDict.base"
+
+endTime         90;
+
+functions {
+#include "/data/openfoam-10/run/bioreactor_cfd/functionObjects/controlDict.run"
+#include "/data/openfoam-10/run/bioreactor_cfd/functionObjects/minMax"
+fieldAverage1
+{
+    type              fieldAverage;
+    libs              ("libfieldFunctionObjects.so");
+    restartOnRestart  false;
+    timeStart         60;
+    writeControl      outputTime;
+    fields
+    (
+     #include "/data/openfoam-10/run/bioreactor_cfd/functionObjects/meanFields"
+    );
+}
+}

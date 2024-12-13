@@ -1,0 +1,38 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  10
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      setFieldsDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+defaultFieldValues
+(
+    volScalarFieldValue alpha.air 1e-3
+    volScalarFieldValue alpha.water 0.999
+);
+
+regions
+(
+    boxToCell
+    {
+$$ r = tank_diameter / 2
+        box (-|-r-| |-fill_height-| -|-r-|) (|-r-| |-tank_height-| |-r-|);
+        fieldValues
+        (
+            volScalarFieldValue alpha.air 0.999999
+            volScalarFieldValue alpha.water 1e-6
+        );
+    }
+);
+
+
+// ************************************************************************* //

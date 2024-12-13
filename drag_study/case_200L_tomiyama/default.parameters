@@ -1,0 +1,26 @@
+base_mesh_size 0.012;
+
+RPM 69.7; // max agitation
+volume 0.25; // m^3
+
+fill_amount 0.8; // 80% filled
+
+v_s 6.7e-4; // superficial gas velocity
+ramp_time 1; // seconds to ramp up agitation
+
+sparger_inlet_fraction 0.044; // fraction of sparger surface area that is inlet
+
+bubble_diameter 0.004;
+
+dragModel tomiyama;
+
+turbulence_intensity 0.01;
+viscosity_ratio 1;
+
+num_processors 30; // placeholder, will be overwritten by set_up_case.sh
+
+project_root "/data/openfoam-10/run/of-bioreactors";
+config_dir_name configs;
+functionObjects_dir_name functionObjects;
+scripts_dir_name scripts;
+
