@@ -1,4 +1,4 @@
-from trophime/salome:9.10.0-jammy
+FROM trophime/salome:9.10.0-jammy
 
 FROM ubuntu:22.04
 ENV DEBIAN_FRONTEND=noninteractive

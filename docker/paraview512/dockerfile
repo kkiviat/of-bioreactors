@@ -1,0 +1,9 @@
+FROM openfoam:10
+
+USER root
+
+RUN sh -c "wget -qO- https://www.paraview.org/files/v5.12/ParaView-5.12.1-MPI-Linux-Python3.10-x86_64.tar.gz | tar xvz -C /opt"
+
+USER foam
+
+RUN echo 'export PATH=/opt/ParaView-5.12.1-MPI-Linux-Python3.10-x86_64/bin:$PATH' >> ~foam/.bashrc

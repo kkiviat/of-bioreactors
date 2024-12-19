@@ -1,2 +1,0 @@
-from trophime/salome:9.12.0-bookworm
-mv /opt/SALOME-9.12.0-DB12 /opt/SALOME
