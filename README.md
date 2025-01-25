@@ -13,7 +13,7 @@ cd functionObjects/strainRate
 wmake
 ```
 
-To use the docker image, run a command like this. This mounts the OpenFOAM directory under `/data` in the container, sets the user id to the current id to ensure access to the files, and sets the working directory to `/data`.
+To use the docker image, run a command like this. This mounts the OpenFOAM directory under `/data` in the container, sets the user id to the current id to ensure access to the files, and sets the working directory to `/data`. Here `<path_to_OpenFOAM_dir>` refers to the OpenFOAM directory that is the parent of `openfoam-10/run/of-bioreactors`.
 
 ```sh
 docker container run -ti --shm-size=1024M --rm -u $(id -u):$(id -g) -v <path_to_OpenFOAM_dir>:/data:z -w /data kkiviat/openfoam:10 bash
@@ -44,7 +44,7 @@ sh set_up_case.sh <n>
 
 To run the case and save output in `log.solver`:
 ```sh
-mpirun -n <n> multiphaseEulerFoam -parallel >> log.solver &
+mpirun -n <n> multiphaseEulerFoam -parallel &>> log.solver &
 ```
 
 # Building Docker image
