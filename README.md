@@ -44,7 +44,7 @@ sh set_up_case.sh <n>
 
 To run the case and save output in `log.solver`:
 ```sh
-mpirun -n <n> multiphaseEulerFoam -parallel &>> log.solver
+mpirun -n <n> multiphaseEulerFoam -parallel >> log.solver &
 ```
 
 # Building Docker image
