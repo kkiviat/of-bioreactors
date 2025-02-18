@@ -1,0 +1,38 @@
+/*---------------------------------------------------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  10
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+Build  : 10-c4cf895ad8fa
+Exec   : setFields
+Date   : Jan 30 2025
+Time   : 17:54:53
+Host   : "e418ac0221d4"
+PID    : 2954
+I/O    : uncollated
+Case   : /data/openfoam-10/run/of-bioreactors/mesh_study/case_20000L/case_20000L_mesh2
+nProcs : 1
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh for time = 0
+
+Reading "setFieldsDict"
+
+Setting field default values
+    Setting internal values of volScalarField alpha.air
+    Setting internal values of volScalarField alpha.water
+
+Setting field region values
+    Adding cells with center within boxes 1((-1.25819 4.02621 -1.25819) (1.25819 5.03276 1.25819))
+    Setting internal values of volScalarField alpha.air
+    Setting internal values of volScalarField alpha.water
+
+End
+

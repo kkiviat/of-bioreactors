@@ -1,0 +1,28 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  3.0.0                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// number of cells
+Nx   127;
+NRinner   25;
+NRouter   12;
+
+// Nh 127;
+// Nr 31;
+// Na #calc "std::round($Nr * 0.6)";
+// shaft_bottom 0.19999999999999996;
+// shaft_radius 0.05;
+
+#include "/data/openfoam-10/run/of-bioreactors/configs/blockMeshDict.cylinder"

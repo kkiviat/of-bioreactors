@@ -1,0 +1,51 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  9
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      topoSetDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+actions
+(
+/** ============ **/
+/**  liquid      **/
+/** ============ **/
+{
+    name        liquidCellSet;
+    type        cellSet;
+    action      new;
+
+    source      cylinderToCell;
+    sourceInfo
+    {
+        point1          ( 0 0 0 );
+        point2          ( 0 1.8688 0 );
+        radius          0.584;
+    }
+}
+// Convert cellSet to cellZone
+{
+    name        liquid;
+    type        cellZoneSet;
+    action      new;
+
+    source setToCellZone;
+    sourceInfo
+    {
+        cellSet liquidCellSet;
+    }
+}
+
+);
+
+// ************************************************************************* //

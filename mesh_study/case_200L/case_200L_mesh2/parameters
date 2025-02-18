@@ -1,0 +1,5 @@
+rho_water 993.0
+mu_water 0.0007
+mu_air 1.89e-05
+p_ref 100000.0
+d_ref 0.004

@@ -1,4 +1,10 @@
 **__pycache__*
 **extendedFeatureEdgeMesh
 **/*200000L*/**/triSurface
-**/*200000L*/**/polyMesh
+polyMesh
+log.solver
+processor*
+PyFoam*
+*.vtk
+0
+postProcessing
