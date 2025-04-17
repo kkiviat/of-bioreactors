@@ -1,3 +1,7 @@
+This repository contains the OpenFOAM configurations and other code for the publication:
+
+> Kira Kiviat, David E. Block, Harishankar Manikantan, Simulation of bioreactor flow environments for large-scale animal cell culture conditions relevant to cultivated meat production, Biochemical Engineering Journal, 2025, https://doi.org/10.1016/j.bej.2025.109753.
+
 # Prerequisites
 These cases are configured for use with OpenFOAM 10. The case setup scripts rely on PyFoam and Salome (used Salome 9.10.0). A docker image [kkiviat/openfoam](https://hub.docker.com/r/kkiviat/openfoam) with the necessary software can be obtained from dockerhub.
 
